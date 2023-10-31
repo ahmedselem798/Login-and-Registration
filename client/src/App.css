@@ -1,0 +1,12 @@
+.card{
+  max-width: 50%;
+  margin-left: 25%;
+  margin-top: 3%;
+}
+h2{
+  text-align: center;
+}
+.btn{
+margin-right: 50px;
+float: left;
+}
