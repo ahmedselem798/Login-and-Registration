@@ -2,7 +2,8 @@
 const express = require("express");
 const cros = require("cors");
 const mongoose = require("mongoose");
-const DataModel = require("./regestSch");
+const Users = require('./model/user')
+// const DataModel = require("./regestSch");
 const app = express();
 app.use(express.json());
 app.use(cros());
@@ -29,8 +30,8 @@ mongoose.connect("mongodb+srv://ahmed:ahmed1234@cluster0.yf5tknm.mongodb.net/Reg
 })
 
 app.post("/register", (req, res) => {
-  DataModel.create(req.body)
-    .then((Data) => res.json(Data))
+  Users.create(req.body)
+    .then((user) => res.json(user))
     .catch((err) => res.json(err));
 });
 app.listen(7000, () => {
