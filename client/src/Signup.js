@@ -7,12 +7,12 @@ function Signup() {
   const [email, SetEmail] = useState();
   const [password, SetPassword] = useState();
 
-  const handelSubmit = (e) => {
-    e.preventDefult();
-    axios
-      .post("http://localhost:7000/register", { name, email, password })
+  const handelSubmit = async (e) => {
+    e.preventDefault();
+    await axios
+      .post("http://localhost:5000/register", { name, email, password })
       .then((result) => console.log(result))
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   return (
@@ -29,7 +29,8 @@ function Signup() {
                 type="text"
                 class="form-control"
                 id="exampleInputText1"
-                onChange={(e)=> SetName(e.target.value)}
+                value={name}
+                onChange={(e) => SetName(e.target.value)}
               />
             </div>
             <div class="mb-3">
@@ -41,6 +42,7 @@ function Signup() {
                 class="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                value={email}
                 onChange={(e) => SetEmail(e.target.value)}
               />
             </div>
@@ -52,6 +54,7 @@ function Signup() {
                 type="password"
                 class="form-control"
                 id="exampleInputPassword1"
+                value={password}
                 onChange={(e) => SetPassword(e.target.value)}
               />
             </div>
