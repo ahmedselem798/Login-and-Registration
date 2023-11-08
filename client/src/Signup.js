@@ -9,10 +9,16 @@ function Signup() {
 
   const handelSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post("http://localhost:5000/register", { name, email, password })
-      .then((result) => console.log(result))
-      .catch(err => console.log(err));
+    try{
+      const result = await axios.post('http://localhost:5000/register',{ name,email,password })
+      console.log(result.data)
+    }catch(error){
+      console.log(error.response)
+    }
+    // await axios
+    //   .post("http://localhost:5000/register", { name, email, password })
+    //   .then((result) => console.log(result))
+    //   .catch(err => console.log(err));
   };
 
   return (
