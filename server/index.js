@@ -17,6 +17,22 @@ mongoose.connect("mongodb://127.0.0.1:27017/RegisterTest").then(()=>{
   console.log("faild")
 })
 
+app.post('/login',(req,res)=>{
+  const {email,password} = req.body
+  Users.findOne({email:email})
+  .then(user=>{
+    if(user){
+      if(user.password===password){
+        res.json("Success")
+      }else{
+        res.json("Wrong Password")
+      }
+    }else{
+      res.json("no User Found")
+    }
+  })
+})
+
 app.post("/register", (req, res) => {
   Users.create(req.body)
     .then((user) => res.json(user))
