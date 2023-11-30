@@ -24,7 +24,7 @@ mongoose
   });
 
 app.listen(8080, () => {
-  console.log("Server Running on Port 8080......");
+  console.log("Server Running on Port 8080.......");
 });
 
 app.post("/register", async (req, res) => {
@@ -52,9 +52,11 @@ app.post("/", async (req, res) => {
     return res.json({ error: "user not exist" });
   }
   if (await bcrypt.compare(password, user.password)) {
-    const token = jwt.sign({ email: user.email }, JWT_SECRET);
+    const token = jwt.sign({ email: user.email }, JWT_SECRET, {
+      expiresIn:5,
+    });
     if (res.status(201)) {
-      console.log(token)
+      console.log(token);
       return res.json({ status: "ok", data: token });
     } else {
       return res.json({ error: "error" });
@@ -66,7 +68,15 @@ app.post("/", async (req, res) => {
 app.post("/home", async (req, res) => {
   const { token } = req.body;
   try {
-    const user = jwt.verify(token, JWT_SECRET);
+    const user = jwt.verify(token, JWT_SECRET, (err, res) => {
+      if (err) {
+        return "Token Expierd";
+      }
+      return res;
+    });
+    if (user == "Token Expierd") {
+      return res.json({ status: "error", data: "Token Expierd" });
+    }
     const userEmail = user.email;
     Users.findOne({ email: userEmail })
       .then((data) => {

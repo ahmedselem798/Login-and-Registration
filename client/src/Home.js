@@ -23,13 +23,31 @@ class Home extends Component {
       .then((data) => {
         console.log(data, "userData");
         this.setState({ userData: data.data });
+        if (data.data === "Token Expierd") {
+          alert("Token Expierd");
+          window.localStorage.clear();
+          window.location.href = "/login";
+        }
       });
   }
+
+  logout = () => {
+    window.localStorage.clear();
+    window.location.href = "/login";
+  };
   render() {
     return (
       <div>
-        <h1>{this.state.userData.name}</h1>
-        <h3>{this.state.userData.email}</h3>
+        <div class="card text-bg-dark mb-3">
+          <div class="card-body">
+            <h1>{this.state.userData.name}</h1>
+            <h3>{this.state.userData.email}</h3>
+            <br></br>
+            <button onClick={this.logout} type="submit" class="btn btn-primary">
+              logout
+            </button>
+          </div>
+        </div>
       </div>
     );
   }
